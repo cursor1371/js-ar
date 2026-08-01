@@ -3,7 +3,7 @@ zerops:
   - setup: docker
     build:
       # 使用带有 Docker 环境的构建基础镜像
-      base: ubuntu/docker@latest
+      base: ubuntu@24.04
       buildCommands:
         # 按照你提供的 Dockerfile 构建镜像，命名为 my-proxy-app
         - docker build -t my-proxy-app .
