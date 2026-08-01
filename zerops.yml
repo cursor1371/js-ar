@@ -1,0 +1,26 @@
+zerops:
+  # 这里的 docker-app 必须和你在第1步填写的 Hostname 完全一致
+  - setup: docker
+    build:
+      # 使用带有 Docker 环境的构建基础镜像
+      base: docker@24
+      buildCommands:
+        # 按照你提供的 Dockerfile 构建镜像，命名为 my-proxy-app
+        - docker build -t my-proxy-app .
+      deployFiles:
+        - .
+    run:
+      # 启动容器：
+      # 1. 先尝试删除旧容器（如果有）
+      # 2. 映射 3000 端口
+      # 3. 使用 -e 参数将 Zerops 的环境变量透传进 Docker 容器内
+      start: >
+        docker rm -f proxy-container || true &&
+        docker run -d 
+        --name proxy-container 
+        -p 3000:3000 
+        -e PORT=3000 
+        -e UUID 
+        -e ARGO_DOMAIN 
+        -e ARGO_AUTH 
+        my-proxy-app
